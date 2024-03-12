@@ -8,10 +8,10 @@ Module: "eks"
 The eks module provisions an Amazon EKS cluster along with managed node groups.
 
 Module Parameters:
-cluster_name: The name of the EKS cluster.
-cluster_version: The version of Kubernetes for the cluster.
-cluster_endpoint_public_access: Determines whether or not the cluster's Kubernetes API server endpoint is accessible from the public internet.
-cluster_addons: Add-ons configuration for the EKS cluster.
+cluster_name: The name of the EKS cluster.  
+  cluster_version: The version of Kubernetes for the cluster.
+  cluster_endpoint_public_access: Determines whether or not the cluster's Kubernetes API server endpoint is accessible from the public internet.
+  cluster_addons: Add-ons configuration for the EKS cluster.
 vpc_id: The ID of the VPC where the EKS cluster will be deployed.
 subnet_ids: The IDs of the subnets in which to deploy the EKS cluster and its resources.
 enable_irsa: Enables IAM Roles for Service Accounts (IRSA) for the cluster.

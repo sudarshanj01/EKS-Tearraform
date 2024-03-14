@@ -5,7 +5,7 @@ variable "default-region" {
 
 variable "cluster_name" {
   type    = string
-  default = "demo-cluster-through-tf"
+  default = "tf-cluster"
 }
 
 variable "cluster_version" {

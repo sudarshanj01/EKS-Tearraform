@@ -1,0 +1,24 @@
+---
+- name: Deploy to K8s Cluster 
+  hosts: all
+  become: true
+tasks:
+  - name: Create config map 
+    shell: |
+      kubectl apply -f mysql-configmap.yaml
+  
+  - name: Create secret
+    shell: | 
+      kubectl apply -f secrets.yaml
+
+   - name: Create MySQL Deployment and Service
+    shell: | 
+      kubectl apply -f mysql-deployment.yaml
+
+   - name: sleep for 20 seconds
+    shell: | 
+      sleep 20
+
+   - name: Create Spring App Deployment and Service
+    shell: | 
+      kubectl apply -f app-deployment.yaml

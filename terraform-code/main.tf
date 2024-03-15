@@ -1,3 +1,11 @@
+data "aws_eks_cluster" "cluster" {
+    name = module.eks.cluster_id
+}
+data "aws_eks_cluster_auth" "cluster" {
+    name = module.eks.cluster_id
+}
+
+
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "~> 20.0"
@@ -37,7 +45,7 @@ module "eks" {
       max_size     = 3
       desired_size = 2
 
-      instance_types = ["t3.large", "t3.medium"]
+      instance_types = ["m6i.large", "t3.medium"]
       capacity_type  = "SPOT"
 
       labels = {
@@ -49,3 +57,5 @@ module "eks" {
   enable_cluster_creator_admin_permissions = true
   authentication_mode = "API_AND_CONFIG_MAP"
 }
+
+

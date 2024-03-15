@@ -1,0 +1,64 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-app-mysql
+  labels:
+    app: demo-app
+spec:
+  selector:
+    matchLabels:
+      app: demo-app
+      tier: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: demo-app
+        tier: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: mysql
+          env:
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-config-map
+                  key: mysql-database-name
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-pass
+                  key: mysql-root-password
+            - name: MYSQL_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-config-map
+                  key: mysql-user-username
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-pass
+                  key: mysql-user-password
+          livenessProbe:
+            tcpSocket:
+              port: 3306
+          ports:
+            - containerPort: 3306
+              name: mysql
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-app-mysql
+  labels:
+    app: demo-app
+spec:
+  ports:
+    - port: 3306
+  selector:
+    app: demo-app
+    tier: mysql
+  clusterIP: None
